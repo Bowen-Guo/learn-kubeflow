@@ -17,7 +17,7 @@
 
 **Step 2**: Register Docker image to [Dockerhub](https://cloud.docker.com/u/guobowen1990/repository/docker/guobowen1990/cnn-demo) or [GCR (Google Container Registry)](https://console.cloud.google.com/gcr/images/kubeflow-trial-241202?project=kubeflow-trial-241202&folder&organizationId)
 
-Repeate Steps 1 and 2 for every component of pipeline, since every component needs a Docker image
+Repeate Steps 1 and 2 for every component of pipeline, since every component needs a Docker image.
 
 **Step 3**: Now component part is almost done (not done yet). Then we need to write a **yaml file** as an **intermediate representation** of the pipeline.
 
