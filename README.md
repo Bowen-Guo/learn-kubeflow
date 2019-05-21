@@ -8,7 +8,7 @@
 #### 2. What is Kubeflow [component](https://www.kubeflow.org/docs/pipelines/concepts/component/)?
 * A pipeline has many components, and a component is just like a step in AML Studio experiment.
 
-* A component has a **Docker image** (source codes) and an **interface**, which specifies the input/output
+* A component has a **Docker image** (source codes) and an **interface**, which specifies the input/output.
 
 #### 3. How to write pipeline and component?
 * Use [Kubeflow Pipelines SDK](https://www.kubeflow.org/docs/pipelines/sdk/), and follow the following steps.
