@@ -15,7 +15,7 @@
 
 **Step 1**: Put source code into a Docker image. To do that, first [install docker](https://docs.docker.com/docker-for-windows/install/). Then write a [Dockerfile](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/). Build the docker image. 
 
-**Step 2**: Register Docker image to [Dockerhub](https://cloud.docker.com/u/guobowen1990/repository/docker/guobowen1990/cnn-demo) or [GCR (Google Container Registry)](https://console.cloud.google.com/gcr/images/kubeflow-trial-241202?project=kubeflow-trial-241202&folder&organizationId)
+**Step 2**: Register Docker image to [Dockerhub](https://cloud.docker.com/u/guobowen1990/repository/docker/guobowen1990/cnn-demo) or [GCR (Google Container Registry)](https://console.cloud.google.com/gcr/images/kubeflow-trial-241202?project=kubeflow-trial-241202&folder&organizationId).
 
 Repeate Steps 1 and 2 for every component of pipeline, since every component needs a Docker image.
 
