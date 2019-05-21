@@ -29,6 +29,7 @@ Repeate Steps 1 and 2 for every component of pipeline, since every component nee
 
     dsl-compile --py [path/to/python/file] --output demo.yaml
 
+* BTW, you can define your own [component specification](https://www.kubeflow.org/docs/pipelines/reference/component-spec/) and put it into the yaml file, so that this component will be inserted into the pipeline. 
 
 **Step 4**: Now it is time to deploy the pipeline! To do that, simply upload the yaml file to Kubeflow UI, then you can see and run your pipeline.
 
