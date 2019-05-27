@@ -1,4 +1,4 @@
-This is a example of Kubeflow pipeline.
+This is an example of Kubeflow pipeline.
 
 * train_component:
   * build_image.ps1: powershell script to build and push Docker image to Dockerhub
