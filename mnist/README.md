@@ -15,6 +15,7 @@ This is an example of Kubeflow pipeline.
 * mnist_pipeline.yaml: pipeline yaml file, which is generated from pipeline.py
 
 * pipeline.py: code using kubeflow sdk to generate mnist_pipeline.yaml. The command line code is:
+
   `dsl-compile --py pipleline.py --output mnist_pipeline.yaml`
 
 
