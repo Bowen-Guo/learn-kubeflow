@@ -1,0 +1,17 @@
+name: mnist-score-component
+description: Score CNN with MNIST data
+inputs:
+  - {name: input_learner_folder_path, type: LocalPath, description: 'Input learner folder path'}
+  - {name: input_data_folder_path, type: LocalPath, description: 'Input data folder path'}
+  - {name: output_data_folder_path, type: LocalPath, description: 'Output data folder path'}
+outputs:
+  - {name: output_data_folder_path, type: LocalPath, description: 'Output data folder path'}
+implementation:
+  container:
+    image: guobowen1990/mnist
+    command: [python, /work_dir/src/train_component.py]
+    args: [
+      --input-learner-folder-path, {inputValue: input_learner_folder_path},
+      --input-data-folder-path, {inputValue: input_data_folder_path},
+      --output-data-folder-path, {outputPath: output_data_folder_path}
+    ]

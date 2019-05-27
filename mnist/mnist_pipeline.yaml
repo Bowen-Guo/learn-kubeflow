@@ -1,0 +1,118 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: mnist-pipeline-
+spec:
+  arguments:
+    parameters: []
+  entrypoint: mnist-pipeline
+  serviceAccountName: pipeline-runner
+  templates:
+  - dag:
+      tasks:
+      - arguments:
+          parameters:
+          - name: mnist-train-component-output-model-folder-path
+            value: '{{tasks.mnist-train-component.outputs.parameters.mnist-train-component-output-model-folder-path}}'
+        dependencies:
+        - mnist-train-component
+        name: mnist-score-component
+        template: mnist-score-component
+      - name: mnist-train-component
+        template: mnist-train-component
+    name: mnist-pipeline
+  - container:
+      args:
+      - --input-learner-folder-path
+      - '{{inputs.parameters.mnist-train-component-output-model-folder-path}}'
+      - --input-data-folder-path
+      - ./input/
+      - --output-data-folder-path
+      - /outputs/output_data_folder_path/data
+      command:
+      - python
+      - /work_dir/src/train_component.py
+      image: guobowen1990/mnist
+    inputs:
+      parameters:
+      - name: mnist-train-component-output-model-folder-path
+    name: mnist-score-component
+    outputs:
+      artifacts:
+      - name: mlpipeline-ui-metadata
+        optional: true
+        path: /mlpipeline-ui-metadata.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-ui-metadata.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+      - name: mlpipeline-metrics
+        optional: true
+        path: /mlpipeline-metrics.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-metrics.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+      parameters:
+      - name: mnist-score-component-output-data-folder-path
+        valueFrom:
+          path: /outputs/output_data_folder_path/data
+  - container:
+      args:
+      - --input-data-folder-path
+      - ./input/
+      - --output-model-folder-path
+      - /outputs/output_model_folder_path/data
+      command:
+      - python
+      - /work_dir/src/train_component.py
+      image: guobowen1990/mnist
+    name: mnist-train-component
+    outputs:
+      artifacts:
+      - name: mlpipeline-ui-metadata
+        optional: true
+        path: /mlpipeline-ui-metadata.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-ui-metadata.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+      - name: mlpipeline-metrics
+        optional: true
+        path: /mlpipeline-metrics.json
+        s3:
+          accessKeySecret:
+            key: accesskey
+            name: mlpipeline-minio-artifact
+          bucket: mlpipeline
+          endpoint: minio-service.kubeflow:9000
+          insecure: true
+          key: runs/{{workflow.uid}}/{{pod.name}}/mlpipeline-metrics.tgz
+          secretKeySecret:
+            key: secretkey
+            name: mlpipeline-minio-artifact
+      parameters:
+      - name: mnist-train-component-output-model-folder-path
+        valueFrom:
+          path: /outputs/output_model_folder_path/data
