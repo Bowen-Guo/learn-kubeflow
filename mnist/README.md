@@ -1,11 +1,11 @@
 This is a example of Kubeflow pipeline.
 
-* train_component
+* train_component:
   * build_image.ps1: powershell script to build and push Docker image to Dockerhub
   * Dockerfile: image Dockerfile, used to build image
   * train_component.yaml: component yaml file
 
-* score_component
+* score_component:
   * The folder content is the same as the train component.
   
 * src: source code 
