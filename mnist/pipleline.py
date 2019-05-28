@@ -2,7 +2,7 @@ import os
 import kfp
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-train_component_path = os.path.join(dir_path, 'train_component', 'train_component.yaml')
+train_component_path = os.path.join(dir_path, 'train_component', 'load_data_component.yaml')
 train_op = kfp.components.load_component_from_file(train_component_path)
 score_component_path = os.path.join(dir_path, 'score_component', 'score_component.yaml')
 score_op = kfp.components.load_component_from_file(score_component_path)

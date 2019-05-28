@@ -1,13 +1,12 @@
 name: mnist-train-component
 description: Train CNN with MNIST data
 inputs:
-  - {name: input_data_folder_path, type: LocalPath, description: 'Input folder path'}
-  - {name: output_model_folder_path, type: LocalPath, description: 'Output folder path'}
+  - {name: input_data_folder_path, type: LocalPath, description: 'Input data folder path'}
 outputs:
-  - {name: output_model_folder_path, type: LocalPath, description: 'Output folder path'}
+  - {name: output_model_folder_path, type: LocalPath, description: 'Output model folder path'}
 implementation:
   container:
-    image: guobowen1990/mnist
+    image: guobowen1990/mnist-pipeline
     command: [python, /work_dir/src/train.py]
     args: [
       --input-data-folder-path, {inputValue: input_data_folder_path},

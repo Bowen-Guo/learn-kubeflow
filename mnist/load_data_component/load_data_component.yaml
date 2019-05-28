@@ -1,0 +1,13 @@
+name: mnist-load-data-component
+description: Load MNIST data for training
+inputs:
+  - {}
+outputs:
+  - {name: output_data_folder_path, type: LocalPath, description: 'Training data folder path'}
+implementation:
+  container:
+    image: guobowen1990/mnist
+    command: [python, /work_dir/src/load_data.py]
+    args: [
+      --output-data-folder-path, {inputValue: output_data_folder_path},
+    ]
