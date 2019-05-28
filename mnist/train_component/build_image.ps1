@@ -1,6 +1,6 @@
 $DOCKER_NAME = "traincnn"
 $REPOSITORY_NAME = "guobowen1990/mnist-train"
-$TAG = "firsttry“
+$TAG = "latest"
 
 cp ../src/* ./src/
 docker build -t $DOCKER_NAME .
