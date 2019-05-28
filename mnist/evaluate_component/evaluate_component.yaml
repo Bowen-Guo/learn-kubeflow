@@ -8,7 +8,7 @@ outputs:
 implementation:
   container:
     image: guobowen1990/mnist
-    command: [python, /work_dir/src/train.py]
+    command: [python, /work_dir/src/evaluate.py]
     args: [
       --input-prediction-folder-path, {inputValue: input_prediction_folder_path}
       --input-true-folder-path, {inputValue: input_true_folder_path}
