@@ -18,10 +18,7 @@ def test_train(delete_dir=True):
     make_folder(input_path)
     make_folder(output_path)
 
-    os.environ.update({
-        'OUTPUT_0': output_path
-    })
-    run_train(input_path)
+    os.system(f"python ../src/train.py --input-data-folder-path={input_path} --output-model-folder-path={output_path}")
 
     if not delete_dir:
         return input_path, output_path
@@ -33,14 +30,16 @@ def test_train(delete_dir=True):
 def test_score(delete_dir=True):
     input_data_path, input_learner_path = test_train(delete_dir=False)
     output_path = input_data_path
-    os.environ.update({
-        'OUTPUT_0': output_path
-    })
 
-    run_score(input_learner_path, input_data_path)
+    os.system(f"python ../src/score.py --input-learner-folder-path={input_learner_path}  "
+              f"--input-data-folder-path={input_data_path}  --output-data-folder-path={output_path}")
 
     if not delete_dir:
         return output_path
 
     delete_folder(input_learner_path)
     delete_folder(output_path)
+
+
+def test_evaluate():
+    pass

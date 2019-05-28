@@ -9,7 +9,7 @@ outputs:
 implementation:
   container:
     image: guobowen1990/mnist
-    command: [python, /work_dir/src/train_component.py]
+    command: [python, /work_dir/src/score.py]
     args: [
       --input-learner-folder-path, {inputValue: input_learner_folder_path},
       --input-data-folder-path, {inputValue: input_data_folder_path},
