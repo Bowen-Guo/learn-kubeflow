@@ -49,15 +49,16 @@ def run_score(learner_folder, data_folder):
     )
 
 
-def run_evaluate(scored_folder_wrapper, ground_truth_folder_wrapper):
+def run_evaluate(scored_data_folder, true_data_folder):
     """
     Evaluate a custom model
 
-    :param scored_folder_wrapper: FolderWrapper instance
+    :param scored_data_folder: str, folder path of scored data
+    :param true_data_folder: str, folder path of true data
     """
     # Initialize custom-defined learner instance
     learner = CNNModel()
     learner.evaluate(
-        predict_labels_folder_path=scored_folder_wrapper.folder_path,
-        ground_truth_folder_path=ground_truth_folder_wrapper.folder_path
+        predict_labels_folder_path=scored_data_folder,
+        ground_truth_folder_path=true_data_folder
     )

@@ -187,6 +187,8 @@ class CNNModel:
         image_label_loader = CustomLoader(mode='predict')
         predict_images, _ = image_label_loader.load_images_labels(data_folder_path)
 
+        print(f"The shape of predict images is {predict_images.shape}")
+
         # Define the input function for prediction
         input_fn = tf.estimator.inputs.numpy_input_fn(
             x={'images': predict_images}, y=None,
@@ -200,6 +202,8 @@ class CNNModel:
         for i in range(predict_images.shape[0]):
             predict_ndarray[i] = next(predict_generator)
 
+        predict_ndarray = predict_ndarray.astype('uint8')
+
         # Dump the predicted result
         output_folder_path = os.environ.get('OUTPUT_0')
         if output_folder_path is None:
@@ -207,7 +211,7 @@ class CNNModel:
         output_file_path = os.path.join(output_folder_path, 'predict_labels.gz')
         CustomDumper.dump_labels(predict_ndarray, output_file_path)
 
-        return predict_ndarray.astype('uint8')
+        return predict_ndarray
 
     def evaluate(self, predict_labels_folder_path, ground_truth_folder_path):
         """
@@ -218,11 +222,10 @@ class CNNModel:
         """
         # Load predicted and true labels
         predict_labels_file_path = os.path.join(predict_labels_folder_path, 'predict_labels.gz')
-        ground_truth_file_path = os.path.join(ground_truth_folder_path, TEST_LABELS)
 
         predicted_labels = CustomLoader(mode='predict').load_prediction_data(
             predict_labels_file_path)
-        true_labels = CustomLoader(mode='predict').load_images_labels(ground_truth_file_path)
+        _, true_labels = CustomLoader(mode='predict').load_images_labels(ground_truth_folder_path)
 
         evaluation_result = {
             'Accuracy': accuracy_score(true_labels, predicted_labels)

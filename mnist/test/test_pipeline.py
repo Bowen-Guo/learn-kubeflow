@@ -1,4 +1,5 @@
 import os
+import json
 import shutil
 
 from cnn_module_entry import run_train, run_score
@@ -34,12 +35,22 @@ def test_score(delete_dir=True):
     os.system(f"python ../src/score.py --input-learner-folder-path={input_learner_path}  "
               f"--input-data-folder-path={input_data_path}  --output-data-folder-path={output_path}")
 
+    delete_folder(input_learner_path)
     if not delete_dir:
         return output_path
-
-    delete_folder(input_learner_path)
     delete_folder(output_path)
 
 
 def test_evaluate():
-    pass
+    predict_folder_path = test_score(delete_dir=False)
+    true_folder_path = predict_folder_path
+    output_path = predict_folder_path
+    os.system(f"python ../src/evaluate.py --input-prediction-folder-path={predict_folder_path}  "
+              f"--input-true-folder-path={true_folder_path}  "
+              f"--output-data-folder-path={output_path}")
+
+    output_json_path = os.path.join(output_path, 'evaluation_result.json')
+    with open(output_json_path) as f:
+        eval_result = json.load(f)
+    print(f"eval_result = {eval_result}")
+    delete_folder(output_path)
