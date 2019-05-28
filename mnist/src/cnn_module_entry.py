@@ -4,6 +4,7 @@ This module is provided by developers, not users.
 """
 
 
+import os
 from cnn_module import CNNModel, CustomLoader
 
 
@@ -19,6 +20,18 @@ from cnn_module import CNNModel, CustomLoader
 #         if not os.path.isdir(self._folder_path):
 #             raise FileNotFoundError(f"Folder path {self._folder_path} is not found")
 #         return self._folder_path
+
+
+def run_load_data():
+    """
+    Load training data
+    """
+    output_folder_path = os.environ.get('OUTPUT_0')
+    if output_folder_path is None:
+        raise ValueError('Environmental variable OUTPUT_0 is not defined')
+
+    # Download MNIST data to output_folder_path
+    CustomLoader().load_images_labels(output_folder_path)
 
 
 def run_train(data_folder):

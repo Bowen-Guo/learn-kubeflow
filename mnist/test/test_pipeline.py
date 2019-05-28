@@ -2,8 +2,6 @@ import os
 import json
 import shutil
 
-from cnn_module_entry import run_train, run_score
-
 
 def make_folder(path):
     os.makedirs(path, exist_ok=True)
@@ -13,10 +11,18 @@ def delete_folder(path):
     shutil.rmtree(path)
 
 
+def test_load_data(delete_dir=True):
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_data_path")
+    make_folder(output_path)
+    os.system(f"python ../src/load_data.py --output-data-folder-path={output_path}")
+    if not delete_dir:
+        return output_path
+    delete_folder(output_path)
+
+
 def test_train(delete_dir=True):
-    input_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "input_train")
-    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_path")
-    make_folder(input_path)
+    input_path = test_load_data(delete_dir=False)
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_model_path")
     make_folder(output_path)
 
     os.system(f"python ../src/train.py --input-data-folder-path={input_path} --output-model-folder-path={output_path}")
