@@ -68,31 +68,25 @@ class CustomLoader:
 
         return mnist.test.images, mnist.test.labels
 
-    def load_labels(self, labels_file_path: str, start_from_magic_number: bool = True):
+    @staticmethod
+    def load_prediction_data(data_file_path: str):
         """
-        Read MNIST labels from its local file path and process
+        Read prediction data from its local file path and process
 
-        :param labels_file_path: str
-        :param start_from_magic_number: bool, if the bytestream starts from a magic number
+        :param data_file_path: str
         :return: np.ndarray
         """
 
-        if not os.path.isfile(labels_file_path):
-            raise FileNotFoundError(f"{labels_file_path} is not found")
+        if not os.path.isfile(data_file_path):
+            raise FileNotFoundError(f"{data_file_path} is not found")
 
-        with gfile.Open(labels_file_path, 'rb') as f:
-            if start_from_magic_number:
-                labels = extract_labels(f)
-            else:
-                with gzip.GzipFile(fileobj=f) as bytestream:
-                    buf = bytestream.read()
-                    labels = np.frombuffer(buf, dtype=np.uint8)
+        with gfile.Open(data_file_path, 'rb') as f:
+            with gzip.GzipFile(fileobj=f) as bytestream:
+                buf = bytestream.read()
+                return np.frombuffer(buf, dtype=np.uint8)
 
-            if self._mode == 'train_component':
-                return labels[self._validation_size:]
-            return labels
-
-    def load_model(self, model_folder_path: str):
+    @staticmethod
+    def load_model(model_folder_path: str):
         """
         Load CNNModel instance with pickle
         :param model_folder_path: str
@@ -226,9 +220,9 @@ class CNNModel:
         predict_labels_file_path = os.path.join(predict_labels_folder_path, 'predict_labels.gz')
         ground_truth_file_path = os.path.join(ground_truth_folder_path, TEST_LABELS)
 
-        predicted_labels = CustomLoader(mode='predict').load_labels(
-            predict_labels_file_path, start_from_magic_number=False)
-        true_labels = CustomLoader(mode='predict').load_labels(ground_truth_file_path)
+        predicted_labels = CustomLoader(mode='predict').load_prediction_data(
+            predict_labels_file_path)
+        true_labels = CustomLoader(mode='predict').load_images_labels(ground_truth_file_path)
 
         evaluation_result = {
             'Accuracy': accuracy_score(true_labels, predicted_labels)
