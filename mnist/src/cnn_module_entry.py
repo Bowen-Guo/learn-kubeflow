@@ -2,22 +2,23 @@
 Interface to invoke methods of custom module, which is CNN in this case.
 This module is provided by developers, not users.
 """
-import os
+
+
 from cnn_module import CNNModel, CustomLoader
 
 
-class FolderWrapper:
-    """
-    Record the folder path of a port
-    """
-    def __init__(self, folder_path):
-        self._folder_path = folder_path
-
-    @property
-    def folder_path(self):
-        if not os.path.isdir(self._folder_path):
-            raise FileNotFoundError(f"Folder path {self._folder_path} is not found")
-        return self._folder_path
+# class FolderWrapper:
+#     """
+#     Record the folder path of a port
+#     """
+#     def __init__(self, folder_path):
+#         self._folder_path = folder_path
+#
+#     @property
+#     def folder_path(self):
+#         if not os.path.isdir(self._folder_path):
+#             raise FileNotFoundError(f"Folder path {self._folder_path} is not found")
+#         return self._folder_path
 
 
 def run_train(data_folder):
