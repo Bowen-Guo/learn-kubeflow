@@ -80,6 +80,8 @@ class CustomLoader:
         if not os.path.isfile(data_file_path):
             raise FileNotFoundError(f"{data_file_path} is not found")
 
+        print(f"Load predicted data from file {data_file_path}")
+
         with gfile.Open(data_file_path, 'rb') as f:
             with gzip.GzipFile(fileobj=f) as bytestream:
                 buf = bytestream.read()
@@ -158,9 +160,8 @@ class CNNModel:
         :param data_folder_path: str, local folder path of train_component images and labels
         """
         # Load train_component images and labels
-        image_label_loader = CustomLoader()
-
-        train_images, train_labels = image_label_loader.load_images_labels(data_folder_path)
+        print(f"Load training images and labels from folder {data_folder_path}")
+        train_images, train_labels = CustomLoader().load_images_labels(data_folder_path)
 
         # Define the input function for training
         input_fn = tf.estimator.inputs.numpy_input_fn(
@@ -168,6 +169,7 @@ class CNNModel:
             batch_size=self.batch_size, num_epochs=None, shuffle=True)
 
         # Train the model
+        print("Train model")
         self.model.train(input_fn, steps=self.num_steps)
 
         # Dump the trained model
@@ -175,6 +177,7 @@ class CNNModel:
         if output_folder_path is None:
             raise ValueError('Environmental variable OUTPUT_0 is not defined')
         output_file_path = os.path.join(output_folder_path, TRAINED_MODEL_NAME)
+        print(f"Dump trained model to {output_file_path}")
         CustomDumper.dump_model(self, output_file_path)
 
     def predict(self, data_folder_path):
@@ -184,10 +187,9 @@ class CNNModel:
         :return: np.ndarray,
         """
         # Load predict images
+        print(f"Load images for prediction from folder {data_folder_path}")
         image_label_loader = CustomLoader(mode='predict')
         predict_images, _ = image_label_loader.load_images_labels(data_folder_path)
-
-        print(f"The shape of predict images is {predict_images.shape}")
 
         # Define the input function for prediction
         input_fn = tf.estimator.inputs.numpy_input_fn(
@@ -195,6 +197,7 @@ class CNNModel:
             batch_size=1, num_epochs=None, shuffle=False)
 
         # Predict and return a generator
+        print(f"Predict data")
         predict_generator = self.model.predict(input_fn)
 
         # Convert the generator into a np.ndarray with dtype of 'uint8'
@@ -209,6 +212,7 @@ class CNNModel:
         if output_folder_path is None:
             raise ValueError('Environmental variable OUTPUT_0 is not defined')
         output_file_path = os.path.join(output_folder_path, 'predict_labels.gz')
+        print(f"Dump the predicted data to {output_file_path}")
         CustomDumper.dump_labels(predict_ndarray, output_file_path)
 
         return predict_ndarray
@@ -223,19 +227,24 @@ class CNNModel:
         # Load predicted and true labels
         predict_labels_file_path = os.path.join(predict_labels_folder_path, 'predict_labels.gz')
 
+        print(f"Load predicted data from {predict_labels_file_path}")
         predicted_labels = CustomLoader(mode='predict').load_prediction_data(
             predict_labels_file_path)
+
+        print(f"Load labeled data from {ground_truth_folder_path}")
         _, true_labels = CustomLoader(mode='predict').load_images_labels(ground_truth_folder_path)
 
         evaluation_result = {
             'Accuracy': accuracy_score(true_labels, predicted_labels)
         }
+        print(f"Accuracy = {evaluation_result.get('Accuracy')}")
 
         # Dump the evaluation result
         output_folder_path = os.environ.get('OUTPUT_0')
         if output_folder_path is None:
             raise ValueError('Environmental variable OUTPUT_0 is not defined')
         output_file_path = os.path.join(output_folder_path, 'evaluation_result.json')
+        print(f"Dump the evaluation result to {output_file_path}")
         CustomDumper.dump_dict(evaluation_result, output_file_path)
 
         return evaluation_result

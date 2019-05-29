@@ -5,6 +5,7 @@ This module is provided by developers, not users.
 
 
 import os
+import time
 from cnn_module import CNNModel, CustomLoader
 
 
@@ -22,6 +23,25 @@ from cnn_module import CNNModel, CustomLoader
 #         return self._folder_path
 
 
+class TimeProfile:
+    """
+    Profile the run time of a function
+    """
+    def __init__(self, tag):
+        self.tag = tag
+        self.start_time = None
+        self.end_time = None
+
+    def __enter__(self):
+        print(f"{self.tag} - Start:")
+        self.start_time = time.perf_counter()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.end_time = time.perf_counter()
+        elapsed_time = self.end_time - self.start_time
+        print(f"{self.tag} - End with {elapsed_time:.4f}s elapsed.")
+
+
 def run_load_data():
     """
     Load training data
@@ -31,7 +51,8 @@ def run_load_data():
         raise ValueError('Environmental variable OUTPUT_0 is not defined')
 
     # Download MNIST data to output_folder_path
-    CustomLoader().load_images_labels(output_folder_path)
+    with TimeProfile("Load data"):
+        CustomLoader().load_images_labels(output_folder_path)
 
 
 def run_train(data_folder):
@@ -42,9 +63,10 @@ def run_train(data_folder):
     """
     # Initialize custom-defined learner instance
     learner = CNNModel()
-    learner.train(
-        data_folder_path=data_folder
-    )
+    with TimeProfile("Train CNN"):
+        learner.train(
+            data_folder_path=data_folder
+        )
 
 
 def run_score(learner_folder, data_folder):
@@ -57,9 +79,10 @@ def run_score(learner_folder, data_folder):
     # Load custom-defined learner by custom-provided loading interface
     learner = CustomLoader().load_model(learner_folder)
 
-    learner.predict(
-        data_folder_path=data_folder
-    )
+    with TimeProfile("Score CNN"):
+        learner.predict(
+            data_folder_path=data_folder
+        )
 
 
 def run_evaluate(scored_data_folder, true_data_folder):
@@ -71,7 +94,8 @@ def run_evaluate(scored_data_folder, true_data_folder):
     """
     # Initialize custom-defined learner instance
     learner = CNNModel()
-    learner.evaluate(
-        predict_labels_folder_path=scored_data_folder,
-        ground_truth_folder_path=true_data_folder
-    )
+    with TimeProfile("Evaluate CNN"):
+        learner.evaluate(
+            predict_labels_folder_path=scored_data_folder,
+            ground_truth_folder_path=true_data_folder
+        )
