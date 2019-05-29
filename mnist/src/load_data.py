@@ -10,6 +10,14 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def mkdir(dir):
+    """
+    create directory
+    :param dir: str, directory path
+    """
+    os.makedirs(dir, exist_ok=True)
+
+
 if __name__ == '__main__':
     args = parse_arguments()
     print(f"output_data_folder_path = {args.output_data_folder_path}")
@@ -17,4 +25,5 @@ if __name__ == '__main__':
     os.environ.update({
         'OUTPUT_0': args.output_data_folder_path
     })
+    mkdir(args.output_data_folder_path)
     run_load_data()

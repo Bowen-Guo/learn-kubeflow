@@ -2,6 +2,7 @@ import os
 import argparse
 
 from cnn_module_entry import run_train
+from load_data import mkdir
 
 
 def parse_arguments():
@@ -19,4 +20,6 @@ if __name__ == '__main__':
     os.environ.update({
         'OUTPUT_0': args.output_model_folder_path
     })
+    mkdir(args.output_model_folder_path)
+
     run_train(args.input_data_folder_path)
