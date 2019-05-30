@@ -1,16 +1,16 @@
-name: mnist-evaluate-component
+name: MNIST - Evaluate trained CNN
 description: Evaluate trained CNN
 inputs:
-  - {name: input_prediction_folder_path, type: LocalPath, description: 'Folder path of prediction data'}
-  - {name: input_true_folder_path, type: LocalPath, description: 'Folder path of labeled data'}
+  - {name: Scored data, type: LocalPath, description: 'Scored data'}
+  - {name: MNIST labels, type: LocalPath, description: 'Labels of MNIST data'}
 outputs:
-  - {name: output_data_folder_path, type: LocalPath, description: 'Folder path of evaluation result'}
+  - {name: Evaluation metrics, type: LocalPath, description: 'Evaluation metrics of trained CNN'}
 implementation:
   container:
     image: guobowen1990/mnist-pipeline:0.0.2
     command: [python, /work_dir/src/evaluate.py]
     args: [
-      --input-prediction-folder-path, {inputValue: input_prediction_folder_path},
-      --input-true-folder-path, {inputValue: input_true_folder_path},
-      --output-data-folder-path, {outputPath: output_data_folder_path},
+      --input-prediction-folder-path, {inputValue: Scored data},
+      --input-true-folder-path, {inputValue: MNIST labels},
+      --output-data-folder-path, {outputPath: Evaluation metrics},
     ]
