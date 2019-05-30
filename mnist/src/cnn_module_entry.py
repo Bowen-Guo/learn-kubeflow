@@ -55,14 +55,15 @@ def run_load_data():
         CustomLoader().load_images_labels(output_folder_path)
 
 
-def run_train(data_folder):
+def run_train(data_folder, number_of_steps):
     """
     Train a custom model
 
     :param data_folder: str, local folder path of train_component images and labels
+    :param number_of_steps: int, number of steps to train CNN
     """
     # Initialize custom-defined learner instance
-    learner = CNNModel()
+    learner = CNNModel(num_steps=number_of_steps)
     with TimeProfile("Train CNN"):
         learner.train(
             data_folder_path=data_folder

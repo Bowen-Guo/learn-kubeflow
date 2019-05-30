@@ -141,10 +141,10 @@ class CustomDumper:
 
 
 class CNNModel:
-    def __init__(self):
+    def __init__(self, num_steps: int = 10):
         # Training Parameters
         self.learning_rate = 0.001
-        self.num_steps = 10
+        self.num_steps = num_steps
         self.batch_size = 128
 
         # Network Parameters

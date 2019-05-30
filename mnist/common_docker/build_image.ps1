@@ -1,6 +1,6 @@
 $DOCKER_NAME = "mnist-tensoorflow"
 $REPOSITORY_NAME = "guobowen1990/mnist-pipeline"
-$TAG = "latest"
+$TAG = "0.0.2"
 $RUN_TEST = 1
 
 if ($RUN_TEST) {
@@ -15,4 +15,4 @@ docker pull zzn2/tensorflow-with-conda
 docker build -t $DOCKER_NAME .
 Remove-Item -Force -Recurse ./src
 docker tag $DOCKER_NAME ${REPOSITORY_NAME}:${TAG}
-docker push $REPOSITORY_NAME
+docker push ${REPOSITORY_NAME}:${TAG}
