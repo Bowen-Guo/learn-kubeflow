@@ -11,6 +11,6 @@ implementation:
     command: [python, /work_dir/src/train.py]
     args: [
       --input-data-folder-path, {inputValue: MNIST data},
-      --number-of-steps, {inputValue: Number of steps}
+      --number-of-steps, {inputValue: Number of steps},
       --output-model-folder-path, {outputPath: Trained model}
     ]
