@@ -1,6 +1,6 @@
 # Run pipeline in docker
 FOLDER=./temp_folder
-mkdir $TEST_DIR
+mkdir $FOLDER
 
 # Run load data
 python /work_dir/src/load_data.py --output-data-folder-path=$FOLDER
