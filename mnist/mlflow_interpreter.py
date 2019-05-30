@@ -52,7 +52,7 @@ class EntryPoint:
         return EntryPoint(
             name=name,
             command=dct.get('command'),
-            parameters=[Parameter.create(name, value) for name, value in dct.get('parameters').items()]
+            parameters={name: Parameter.create(name, value) for name, value in dct.get('parameters').items()}
         )
 
 
