@@ -52,8 +52,8 @@ def test_evaluate():
 
 
 def test_evaluate_from_aml():
-    # predict_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'aml_container')
-    predict_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'aml_container', 'output')
+    # predict_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input_aml')
+    predict_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input_aml', 'output')
 
     true_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "input")
     output_path = os.path.join(predict_folder_path, 'output')
@@ -68,9 +68,8 @@ def test_evaluate_from_aml():
 
 def test_score_from_aml():
     input_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "input")
-    input_learner_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "aml_container")
+    input_learner_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "input_aml")
     output_path = os.path.join(input_learner_path, "output")
     os.system(f"python ../src/score.py --input-learner-folder-path={input_learner_path}  "
               f"--input-data-folder-path={input_data_path}  --output-data-folder-path={output_path}")
     # delete_folder(output_path)
-
