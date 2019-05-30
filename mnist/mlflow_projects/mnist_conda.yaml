@@ -4,4 +4,4 @@ dependencies:
   - python=3.6.8
   - pip:
     - tensorflow
-    - mlflow
+    - sklearn
