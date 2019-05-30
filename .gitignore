@@ -1,6 +1,7 @@
 .idea
-*.pyc
 mlruns/
 gen/
 input/
 input*/
+*.dll
+*.pyc
