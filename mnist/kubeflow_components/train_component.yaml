@@ -7,7 +7,7 @@ outputs:
   - {name: output_model_folder_path, type: LocalPath, description: 'Output model folder path'}
 implementation:
   container:
-    image: guobowen1990/mnist-pipeline
+    image: guobowen1990/mnist-pipeline:0.0.2
     command: [python, /work_dir/src/train.py]
     args: [
       --input-data-folder-path, {inputValue: input_data_folder_path},

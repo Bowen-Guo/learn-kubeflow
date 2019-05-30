@@ -7,7 +7,7 @@ outputs:
   - {name: output_data_folder_path, type: LocalPath, description: 'Output data folder path'}
 implementation:
   container:
-    image: guobowen1990/mnist
+    image: guobowen1990/mnist:0.0.2
     command: [python, /work_dir/src/score.py]
     args: [
       --input-learner-folder-path, {inputValue: input_learner_folder_path},
