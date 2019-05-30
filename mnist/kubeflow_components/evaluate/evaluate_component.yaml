@@ -10,7 +10,7 @@ implementation:
     image: guobowen1990/mnist-pipeline:0.0.2
     command: [python, /work_dir/src/evaluate.py]
     args: [
-      --input-prediction-folder-path, {inputValue: input_prediction_folder_path}
-      --input-true-folder-path, {inputValue: input_true_folder_path}
+      --input-prediction-folder-path, {inputValue: input_prediction_folder_path},
+      --input-true-folder-path, {inputValue: input_true_folder_path},
       --output-data-folder-path, {outputPath: output_data_folder_path},
     ]
