@@ -55,6 +55,10 @@ class EntryPoint:
             parameters={name: Parameter.create(name, value) for name, value in dct.get('parameters').items()}
         )
 
+    def get_resolved_command(self, **kwargs):
+        # TODO: handle default values
+        return self._command.format(**kwargs)
+
 
 class MLProject:
     def __init__(self):
@@ -68,6 +72,9 @@ class MLProject:
     @property
     def entry_points(self):
         return self._entry_points
+
+    def create_pipeline_steps(self):
+        pass
 
 
 if __name__ == '__main__':
