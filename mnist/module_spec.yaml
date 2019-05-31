@@ -1,0 +1,39 @@
+# Specify the underlined data is a Kubeflow component
+module_type: Kubeflow component
+
+# Specify the location of Kubeflow component yaml file
+source:
+  # 1) Source can either specified by a remote git repo
+  - git: git@github.com:Bowen-Guo/learn-kubeflow.git
+    # A reference to a specific version, e.g. a git tag, a commit hash, etc.
+    ref: 0.0.2
+    # The relative file path of spec yaml file inside the git repo.
+    path: mnist/kubeflow_components/evaluate/evaluate_component.yaml
+
+  # 2) Or specified by a local path
+  - file: /path/to/local/path/of/component/yaml
+
+# Optional, get from Kubeflow yaml file by default, but can be overridden here.
+name: MNIST - Evaluate trained CNN
+# Optional, same as above
+description: Evaluate trained CNN
+
+# Considering, not sure for now
+version: 0.0.1
+
+# Specify input ports, the inputs listed here will be shown as an input port
+input_ports:
+  - Scored data
+  - MNIST labels
+
+# Optional for Kubeflow, needed for MLflow
+output_ports:
+  - Evaluated results
+
+# Considering, maybe needed by
+metrics:
+  - Accuracy
+
+# Considering...
+inference:
+  - ...
