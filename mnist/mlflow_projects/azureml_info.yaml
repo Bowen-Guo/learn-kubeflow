@@ -1,0 +1,51 @@
+name: train_cnn_with_mnist_data
+
+#docker_env:
+#  image: guobowen1990/mnist-pipeline:0.0.2
+conda_env: mnist_conda.yaml
+
+entry_points:
+  load_data:
+    parameters:
+      output_data_folder_path: {type: path, default: "./input"}
+    artifacts:
+      - MNIST data
+    command: "python ../src/load_data.py --output-data-folder-path {output_data_folder_path}"
+
+  train:
+    parameters:
+      input_data_folder_path: {type: path, default: "./input"}
+      number_of_steps: {type: int, default: 10}
+      output_model_folder_path: {type: path, default: "./output"}
+    parameter_references:
+      input_data_folder_path: {entry: load_data, artifact: MNIST data}
+    artifacts:
+      - Output model
+    command: "python ../src/train.py --input-data-folder-path {input_data_folder_path}
+    --number-of-steps {number_of_steps} --output-model-folder-path {output_model_folder_path}"
+
+  score:
+    parameters:
+      input_learner_folder_path: {type: path, default: "./input"}
+      input_data_folder_path: {type: path, default: "./input"}
+      output_data_folder_path: {type: path, default: "./output"}
+    parameter_references:
+      input_learner_folder_path: {entry: train, artifact: Output model}
+      input_data_folder_path: {entry: load_data, artifact: MNIST data}
+    artifacts:
+      - Scored data
+    command: "python ../src/score.py --input-learner-folder-path {input_learner_folder_path}
+    --input-data-folder-path {input_data_folder_path} --output-data-folder-path {output_data_folder_path}"
+
+  evaluate:
+    parameters:
+      input_prediction_folder_path: {type: path, default: "./input"}
+      input_true_folder_path: {type: path, default: "./input"}
+      output_data_folder_path: {type: path, default: "./output"}
+    parameter_references:
+      input_prediction_folder_path: {entry: score, artifact: Scored data}
+      input_true_folder_path: {entry: load_data, artifact: MNIST data}
+    metrics:
+      - accuracy
+    command: "python ../src/evaluate.py --input-prediction-folder-path {input_prediction_folder_path}
+    --input-true-folder-path {input_true_folder_path} --output-data-folder-path {output_data_folder_path}"
