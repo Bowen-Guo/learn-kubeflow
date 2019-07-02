@@ -1,7 +1,7 @@
-name: NER Eval Module
+name: NER Evaluate
 family_id: 921d8b14-9e04-46ff-85c2-fbe942b40b65
 category: Machine Learning\Evaluate
-description: NER eval module
+description: NER evaluate module
 inputs:
 - name: Input test data
   type: Dataset
