@@ -1,4 +1,6 @@
 from __future__ import absolute_import, division, print_function
+import pyarrow.parquet as pq
+import faulthandler
 import json
 import logging
 import os
@@ -14,10 +16,12 @@ from torch.utils.data import (DataLoader, RandomSampler, TensorDataset)
 from tqdm import tqdm, trange
 from arg_opts import train_opts
 
+
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
                     datefmt='%m/%d/%Y %H:%M:%S',
                     level=logging.INFO)
-
+faulthandler.enable()
+logging.info(f"Load pyarrow.parquet explicitly: {pq}")
 logger = logging.getLogger(__name__)
 
 
@@ -102,7 +106,8 @@ class DataProcessor(object):
         """Gets the list of labels for this data_bak set."""
         raise NotImplementedError()
 
-    def _read_dataframe(cls, data_path):
+    @staticmethod
+    def _read_dataframe(data_path):
         """Reads a tab separated value file."""
         return read_dataframe(read_parquet(data_path))
 
