@@ -1,0 +1,47 @@
+{
+    "Id": "1ce93b70-8e45-4d40-b61f-d8de1781bf0f-93",
+    "ModuleId": "506153734175476c4f62416c57734963.4e1b0fe6aded4b3fa36f39b8862b9004.v1-default-1750",
+    "ModuleEntry": {
+        "ModuleName": "azureml.studio.modules.dataio.import_data.import_data",
+        "ClassName": "ImportDataModule",
+        "MethodName": "run"
+    },
+    "ModuleParameters": [
+        {
+            "Name": "Please Specify Data Source",
+            "Value": "Http",
+            "ValueType": "Literal",
+            "LinkedGlobalParameter": null
+        },
+        {
+            "Name": "URL",
+            "Value": "https://chjinchetestse1240092388.blob.core.windows.net/data/valid.tsv",
+            "ValueType": "Literal",
+            "LinkedGlobalParameter": null
+        },
+        {
+            "Name": "Data format",
+            "Value": "TSV",
+            "ValueType": "Literal",
+            "LinkedGlobalParameter": null
+        },
+        {
+            "Name": "CSV or TSV has Header Row",
+            "Value": "True",
+            "ValueType": "Literal",
+            "LinkedGlobalParameter": null
+        }
+    ],
+    "InputPortsInternal": [],
+    "OutputPortsInternal": [
+        {
+            "Name": "Results dataset",
+            "Folder": "9e5eade8_fa58_4a3b_9c51_d9b3f704b756"
+        }
+    ],
+    "ModuleStatisticsFolder": "9425a71e_4c53_11e9_8646_d663bd873d93",
+    "UsePreviousResults": false,
+    "IsPartOfPartialRun": null,
+    "Comment": "",
+    "CommentCollapsed": true
+}

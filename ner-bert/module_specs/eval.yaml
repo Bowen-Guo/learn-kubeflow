@@ -1,0 +1,68 @@
+name: NER Eval Module
+family_id: 0207d252-6c41-4c77-84c3-73bdf1ac5960?
+category: Machine Learning\Evaluate
+description: NER eval module
+inputs:
+- name: Input test data
+  type: Dataset
+  connectable: True
+  default: ""
+  description: input test data
+- name: BERT pretrained model
+  type: Mode
+  connectable: False
+  default: "bert-base-cased"
+  description: Specify BERT pretrained model
+  options:
+    - bert-base-uncased
+    - bert-base-cased
+    - bert-large-uncased
+    - bert-large-cased
+- name: Trained model
+  type: Model
+  connectable: True
+  description: Trained model folder
+- name: Maximum sequence length
+  type: Int
+  connectable: False
+  default: 128
+  description: Specify maximum sequence length
+outputs:
+- name: Output evaluation result
+  type: Dataset
+  connectable: False
+  description: The output directory where evaluation results will be written.
+implementation:
+  container:
+    conda:
+      content:
+        name: project_environment
+        channels:
+        - defaults
+        dependencies:
+        - python=3.6.2
+        - pip:
+          - --extra-index-url=https://test.pypi.org/simple
+          - https://download.pytorch.org/whl/cu100/torch-1.1.0-cp36-cp36m-linux_x86_64.whl
+          - pytorch-pretrained-bert==0.6.1
+          - seqeval==0.0.5
+          - tqdm==4.31.1
+          - nltk==3.4
+          - torchvision==0.3.0
+          - pandas==0.24.1
+          - pyarrow==0.12.1
+    command:
+    - python
+    - eval.py
+    args:
+    - --test_data_path
+    - inputValue: Input test data
+    - --bert_model
+    - inputValue: BERT pretrained model
+    - --trained_model_dir
+    - inputValue: Trained model
+    - --max_seq_length
+    - inputValue: Maximum sequence length
+    - --output_eval_dir
+    - outputPath: Output evaluation result
+
