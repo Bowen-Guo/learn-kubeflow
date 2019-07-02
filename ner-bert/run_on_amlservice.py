@@ -1,7 +1,7 @@
 import os
 
 from tools.amlservice_scaffold.amlservice_pipeline import Module, PipelineStep, run_pipeline
-from azureml.core import Experiment, RunConfiguration, Workspace
+from azureml.core import RunConfiguration, Workspace
 from azureml.core.environment import DEFAULT_GPU_IMAGE
 
 MODULE_SPECS_FOLDER = 'module_specs'

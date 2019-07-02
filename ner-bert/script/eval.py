@@ -1,4 +1,6 @@
 from __future__ import absolute_import, division, print_function
+import pyarrow.parquet as pq
+import faulthandler
 import logging
 import pandas as pd
 import json
@@ -18,6 +20,8 @@ from pytorch_pretrained_bert.tokenization import BertTokenizer
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
                     datefmt='%m/%d/%Y %H:%M:%S',
                     level=logging.INFO)
+faulthandler.enable()
+logging.info(f"Load pyarrow.parquet explicitly: {pq}")
 logger = logging.getLogger(__name__)
 
 
@@ -30,8 +34,9 @@ class Ner:
         self.label_map = {int(k): v for k, v in self.label_map.items()}
         self.model.eval()
 
-    def load_model(self, model_dir: str, model_config: str = "model_config.json"):
-        model_config = os.path.join(model_dir,model_config)
+    @staticmethod
+    def load_model(model_dir, model_config: str = "model_config.json"):
+        model_config = os.path.join(model_dir, model_config)
         model_config = json.load(open(model_config))
         output_config_file = os.path.join(model_dir, CONFIG_NAME)
         output_model_file = os.path.join(model_dir, WEIGHTS_NAME)
@@ -118,7 +123,8 @@ class DataProcessor(object):
         """Gets the list of labels for this data_bak set."""
         raise NotImplementedError()
 
-    def _read_dataframe(cls, data_path):
+    @staticmethod
+    def _read_dataframe(data_path):
         """Reads a tab separated value file."""
         return read_dataframe(read_parquet(data_path))
 
