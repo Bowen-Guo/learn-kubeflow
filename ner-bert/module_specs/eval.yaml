@@ -3,6 +3,10 @@ family_id: 921d8b14-9e04-46ff-85c2-fbe942b40b65
 category: Machine Learning\Evaluate
 description: NER evaluate module
 inputs:
+- name: Trained model
+  type: Model
+  connectable: True
+  description: Trained model folder
 - name: Input test data
   type: Dataset
   connectable: True
@@ -18,10 +22,6 @@ inputs:
     - bert-base-cased
     - bert-large-uncased
     - bert-large-cased
-- name: Trained model
-  type: Model
-  connectable: True
-  description: Trained model folder
 - name: Maximum sequence length
   type: Int
   connectable: False
