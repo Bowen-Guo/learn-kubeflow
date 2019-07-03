@@ -57,7 +57,8 @@ implementation:
           - git+https://github.com/Bowen-Guo/learn-kubeflow.git@add_ner-bert#subdirectory=ner-bert
     command:
     - python
-    - eval.py
+    - -m
+    - script.eval
     args:
     - --test_data_path
     - inputValue: Input test data
