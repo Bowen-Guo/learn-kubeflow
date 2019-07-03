@@ -34,6 +34,9 @@ outputs:
   description: The output directory where evaluation results will be written.
 implementation:
   container:
+    meta:
+      baseDockerImage: mcr.microsoft.com/azureml/base-gpu:intelmpi2018.3-cuda10.0-cudnn7-ubuntu16.04
+      gpuSupport: true
     conda:
       content:
         name: project_environment
