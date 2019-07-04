@@ -64,7 +64,8 @@ implementation:
           - git+https://github.com/Bowen-Guo/learn-kubeflow.git@add_ner-bert#subdirectory=ner-bert
     command:
     - python
-    - train.py
+    - -m
+    - script.train
     args:
     - --train_data_path
     - inputValue: Input train data
