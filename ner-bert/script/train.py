@@ -213,7 +213,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
 
 def main():
     parser = train_opts()
-    args = parser.parse_args()
+    args, _ = parser.parse_known_args()
 
     if args.local_rank == -1 or args.no_cuda:
         device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
