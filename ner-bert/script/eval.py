@@ -13,7 +13,7 @@ from pytorch_pretrained_bert.modeling import (CONFIG_NAME, WEIGHTS_NAME,
 from seqeval.metrics import classification_report
 from torch.utils.data import (DataLoader, SequentialSampler, TensorDataset)
 from tqdm import tqdm
-from arg_opts import eval_opts
+from .arg_opts import eval_opts
 from pytorch_pretrained_bert.tokenization import BertTokenizer
 
 
