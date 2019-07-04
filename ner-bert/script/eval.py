@@ -321,7 +321,7 @@ def main():
         "AuxiliaryFileExtension": None,
         "AuxiliaryContentType": None
     }
-    with open(os.path.join(args.output_model_dir, 'data_type.json'), 'w') as f:
+    with open(os.path.join(args.output_eval_dir, 'data_type.json'), 'w') as f:
         json.dump(dct, f)
 
 
