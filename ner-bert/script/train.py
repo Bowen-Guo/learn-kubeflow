@@ -353,6 +353,25 @@ def main():
                     "label_map": label_map}
     json.dump(model_config, open(os.path.join(args.output_model_dir, "model_config.json"), "w"))
 
+    # Dump data_type.json as a work around until SMT deploys
+    dct = {
+        "Id": "ILearnerDotNet",
+        "Name": "ILearner .NET file",
+        "ShortName": "Model",
+        "Description": "A .NET serialized ILearner",
+        "IsDirectory": False,
+        "Owner": "Microsoft Corporation",
+        "FileExtension": "ilearner",
+        "ContentType": "application/octet-stream",
+        "AllowUpload": False,
+        "AllowPromotion": False,
+        "AllowModelPromotion": True,
+        "AuxiliaryFileExtension": None,
+        "AuxiliaryContentType": None
+    }
+    with open(os.path.join(args.output_model_dir, 'data_type.json'), 'w') as f:
+        json.dump(dct, f)
+
 
 if __name__ == "__main__":
     main()
