@@ -372,6 +372,11 @@ def main():
     with open(os.path.join(args.output_model_dir, 'data_type.json'), 'w') as f:
         json.dump(dct, f)
 
+    # Dump data.ilearner as a work around until data type design
+    visualization = os.path.join(args.output_model_dir, "data.ilearner")
+    with open(visualization, 'w') as file:
+        file.writelines('{}')
+
 
 if __name__ == "__main__":
     main()
