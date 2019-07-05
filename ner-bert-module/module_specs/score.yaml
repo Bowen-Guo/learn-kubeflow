@@ -1,0 +1,54 @@
+name: NER Score
+family_id: d4098d60-4239-416a-ab41-1cd1e6dad761
+category: Machine Learning\Score
+description: NER score module
+inputs:
+- name: Trained model
+  type: Model
+  connectable: True
+  description: Trained model folder
+- name: Input test data
+  type: Dataset
+  connectable: True
+  default: ""
+  description: input test data
+outputs:
+- name: Output evaluation results
+  type: Dataset
+  connectable: False
+  description: The output directory where prediction and evaluation results will be written.
+implementation:
+  container:
+    meta:
+      baseDockerImage: mcr.microsoft.com/azureml/base-gpu:intelmpi2018.3-cuda10.0-cudnn7-ubuntu16.04
+      gpuSupport: true    
+    conda:
+      content:
+        name: project_environment
+        channels:
+        - defaults
+        dependencies:
+        - python=3.6.2
+        - pip:
+          - --extra-index-url=https://test.pypi.org/simple
+          - https://download.pytorch.org/whl/cu100/torch-1.1.0-cp36-cp36m-linux_x86_64.whl
+          - pytorch-pretrained-bert==0.6.1
+          - seqeval==0.0.5
+          - tqdm==4.31.1
+          - nltk==3.4
+          - torchvision==0.3.0
+          - pandas==0.24.1
+          - pyarrow==0.12.1
+          - git+https://github.com/Bowen-Guo/learn-kubeflow.git@add_ner-bert#subdirectory=ner-bert-module
+    command:
+    - python
+    - -m
+    - script.score
+    args:
+    - --trained_model_dir
+    - inputValue: Trained model
+    - --test_feature_dir
+    - inputValue: Input test data
+    - --output_eval_dir
+    - outputPath: Output evaluation results
+
