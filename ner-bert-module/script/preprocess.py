@@ -2,6 +2,7 @@ from __future__ import absolute_import, division, print_function
 import pyarrow.parquet as pq
 import faulthandler
 import logging
+import json
 import os
 import pandas as pd
 from pytorch_pretrained_bert.tokenization import BertTokenizer
@@ -300,6 +301,7 @@ def main():
     }
     with open(os.path.join(args.output_feature_dir, 'data_type.json'), 'w') as f:
         json.dump(dct, f)
+
 
 if __name__ == "__main__":
     main()
