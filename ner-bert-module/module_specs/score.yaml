@@ -40,6 +40,10 @@ implementation:
           - pandas==0.24.1
           - pyarrow==0.12.1
           - git+https://github.com/Bowen-Guo/learn-kubeflow.git@add_ner-bert#subdirectory=ner-bert-module
+    invoking:
+      module: script.score
+      class: Ner
+      func:
     command:
     - python
     - -m
