@@ -4,6 +4,7 @@ import faulthandler
 import logging
 import os
 import pandas as pd
+import json
 from pytorch_pretrained_bert.tokenization import BertTokenizer
 from .arg_opts import preprocess_opts
 
@@ -300,6 +301,7 @@ def main():
     }
     with open(os.path.join(args.output_feature_dir, 'data_type.json'), 'w') as f:
         json.dump(dct, f)
+
 
 if __name__ == "__main__":
     main()
