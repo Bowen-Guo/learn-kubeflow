@@ -1,7 +1,7 @@
-name: NER Evaluate
-family_id: 921d8b14-9e04-46ff-85c2-fbe942b40b65
-category: Machine Learning\Evaluate
-description: NER evaluate module
+name: NER Score
+family_id: 3cbe1152-6b3e-4fdd-b57c-4ad6affc3a49
+category: Machine Learning\Score
+description: NER score module
 inputs:
 - name: Trained model
   type: Model
