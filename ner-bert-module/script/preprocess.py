@@ -5,6 +5,7 @@ import logging
 import json
 import os
 import pandas as pd
+import json
 from pytorch_pretrained_bert.tokenization import BertTokenizer
 from .arg_opts import preprocess_opts
 
